@@ -66,3 +66,45 @@ assert is_good_weather(rainy) == False, "Rainy+humid+windy should be False"
 assert is_good_weather(hot) == False, "Too hot should be False"
 print("✅ PASS — Dictionary access mastered! This is exactly how API data looks.")
 # print(get_weather_summary(sample))
+
+
+# ----- Exercise 3: Handling messy API data -----------
+def clean_weather_data(data):
+    return {
+        "city": data.get("city") or "Unknown",
+        "temperature": data.get("temperature") or 0,
+        "humidity": data.get("humidity") or 50,
+        "wind_speed": data.get("wind_speed") or 0,
+        "condition": data.get("condition") or "unknown"
+    }
+
+# ── Tests ──
+complete = {"city": "Prague", "temperature": 18,
+            "humidity": 65, "wind_speed": 12, "condition": "sunny"}
+
+missing_fields = {"city": "Brno", "temperature": None, "wind_speed": 8}
+
+nearly_empty = {"city": "Ostrava"}
+
+empty = {}
+
+r1 = clean_weather_data(complete)
+assert r1["city"] == "Prague"
+assert r1["temperature"] == 18
+assert r1["condition"] == "sunny"
+
+r2 = clean_weather_data(missing_fields)
+assert r2["temperature"] == 0, "None temperature should become 0"
+assert r2["humidity"] == 50, "Missing humidity should become 50"
+assert r2["condition"] == "unknown", "Missing condition should be 'unknown'"
+
+r3 = clean_weather_data(nearly_empty)
+assert r3["city"] == "Ostrava"
+assert r3["temperature"] == 0
+assert r3["wind_speed"] == 0
+
+r4 = clean_weather_data(empty)
+assert r4["city"] == "Unknown"
+assert r4["humidity"] == 50
+
+print("✅ PASS — Defensive coding! Your API collector will need exactly this.")
