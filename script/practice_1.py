@@ -41,6 +41,14 @@ def is_good_weather(data):
         return True
     else:
         return False
+# cleaner version
+# def is_good_weather(data):
+#     return (
+#         15 <= data["temperature"] <= 28
+#         and data["humidity"] < 80
+#         and data["wind_speed"] < 20
+#         and data["condition"] not in ("rainy", "stormy")  # cleaner than two != checks
+#     )
 
 # ── Tests ──
 sample = {"city": "Prague", "temperature": 18, "humidity": 65,
