@@ -37,7 +37,10 @@ def get_weather_summary(data):
     return template.format_map(data)
 
 def is_good_weather(data):
-    weather_summary = get_weather_summary(data)
+    if 15 <= data["temperature"] <= 28 and data["humidity"] < 80 and data["wind_speed"] < 20 and data["condition"] != "rainy" and data["condition"] != "stormy":
+        return True
+    else:
+        return False
 
 # ── Tests ──
 sample = {"city": "Prague", "temperature": 18, "humidity": 65,
